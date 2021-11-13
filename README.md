@@ -1,2 +1,2 @@
 # Capture The Flag
- Repositório para mostrar Write-ups dos mais clássicos CTFs
+Repository for showing Write-ups of the most classic CTFs (on TryHackMe; HTB)
