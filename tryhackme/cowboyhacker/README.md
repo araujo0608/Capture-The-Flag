@@ -126,6 +126,7 @@ Now we have an username, password list and a ssh service. Next step is bruteforc
 ## QUESTION 05: user.txt
 
 Let's login ssh with the credentials.
+<br>
 ![loginssh](files/login-ssh.png)
 
 > Boom! We are on the server
