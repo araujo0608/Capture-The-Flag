@@ -99,7 +99,7 @@ ReDSynd1ca7e
 
 > Strange. Looks like a file with possible passwords.
 
-**With the information obtained so far, you are already able to answer question 02.**
+v
 
 -----
 
@@ -120,3 +120,45 @@ Now we have an username, password list and a ssh service. Next step is bruteforc
 > We found!
 
 **With the information obtained so far, you are already able to answer question 03 and question 04.**
+
+-----
+
+## QUESTION 05: user.txt
+
+Let's login ssh with the credentials.
+![loginssh](files/login-ssh.png)
+
+> Boom! We are on the server
+
+![user](files/usertxt.png)
+
+Running `ls -la` we found the flag user.txt
+> Pretty easy flag
+
+**With the information obtained so far, you are already able to answer question 05.**
+
+----
+
+## QUESTION 06: root.txt
+
+Now we have to escalate privilege and get the last flag root.txt.
+
+After a long time looking through the files and searching for possible users, I thought I would use the linpeas script to automate my process (You can download it [here](https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS)), it is a very powerful script.
+
+But I had forgotten to see what our current user can do. So i run `sudo -l`
+
+![tar](files/allowed-tar.png)
+
+We can use **tar**
+
+A fast search on Google and i found on [GTFFobins site](https://gtfobins.github.io/gtfobins/tar/) this code:
+
+![privilege-tar](files/tar-for-root.png)
+
+~~~
+sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+~~~
+
+Now we are root. Just take the flag in `/root/root.txt`
+
+![root](files/rootxt.png)
