@@ -11,10 +11,10 @@
 
 > Bom, basta fazer um simples escanemento. Você pode usar qualquer ferramenta de port-scan que preferir. Eu usarei o Nmap.
 
-> Eu gosto de salvar o relatório do nmap em um arquivo próprio, mas se você não gostar rode apenas `nmap -A [target]`
+> Eu gosto de salvar o relatório do nmap em um arquivo próprio, mas se você não gostar rode apenas `nmap -A [alvo]`
 `
 
-**PASSO 01:** Execute no terminal `nmap -A [target] > file.txt`
+**PASSO 01:** Execute no terminal `nmap -A [alvo] > arquivo.txt`
 
 No meu caso:
   `nmap -A 10.10.81.241 > scan.txt`
