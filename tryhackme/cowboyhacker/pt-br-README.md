@@ -9,10 +9,10 @@
 
 **TRADUZINDO: Ache as portas abertas na máquina**
 
-> Bom, basta fazer um simples escanemento. Você pode usar qualquer ferramenta de port-scan que preferir. Eu usarei o Nmap.
+> Bom, basta fazer um simples escaneamento. Você pode usar qualquer ferramenta de port-scan que preferir. Eu usarei o Nmap.
 
 > Eu gosto de salvar o relatório do nmap em um arquivo próprio, mas se você não gostar rode apenas `nmap -A [alvo]`
-`
+
 
 **PASSO 01:** Execute no terminal `nmap -A [alvo] > arquivo.txt`
 
@@ -35,12 +35,12 @@ Resultado:
   <br>
 
   ![website](files/website.png)
-.
+
   Sempre verifique o código fonte do site, pode conter alguma informação sensível comentada.
 
   ![source](files/source-webpage.png)
 
-  Mas nesse caso, não achei relevante. Apenas possíveis usuarios pra login no ssh.
+  Mas nesse caso, não achei nada relevante. Apenas possíveis usuarios pra login no ssh.
 
 ----
 
@@ -115,7 +115,7 @@ ReDSynd1ca7e
 
 Agora temos um usuário, uma lista de senhas e um serviço ssh que ainda não foi explorado. Sendo assim, a próxima etapa é tentar quebrar o ssh usando as credenciais encontradas. Para isso, irei utilizar o `hydra` mas você pode usar outra ferramenta que preferir
 
-**PASSO 01:** Bruteforce ssh com hydra usando esse comando: `hydra -l lin -P locks.txt ssh://alvo`
+**PASSO 01:** Quebre a senha do ssh com hydra usando esse comando: `hydra -l lin -P locks.txt ssh://alvo`
 
  No meu caso:
 
@@ -123,42 +123,42 @@ Agora temos um usuário, uma lista de senhas e um serviço ssh que ainda não fo
 
 ![hydraresult](files/ssh-bruteforce-hydra.png)
 
-> We found!
+> Nós achamos!
 
-**With the information obtained so far, you are already able to answer question 03 and question 04.**
+**Com as informações encontradas acima você já é capaz de responder as questões 03 e 04.**
 
 -----
 
 ## QUESTION 05: user.txt
 
-Let's login ssh with the credentials.
+Vamos fazer o login no servidor ssh com as credenciais encontradas.
 <br>
 ![loginssh](files/login-ssh.png)
 
-> Boom! We are on the server
+> Boom! Estamos no servidor!
 
 ![user](files/usertxt.png)
 
-Running `ls -la` we found the flag user.txt
-> Pretty easy flag
+Rodando um simples `ls -la` nós achamos a flag user.txt
+> Flag muito easy
 
-**With the information obtained so far, you are already able to answer question 05.**
+**Com as informações encontradas acima você já é capaz de responder a questão 05**
 
 ----
 
 ## QUESTION 06: root.txt
 
-Now we have to escalate privilege and get the last flag root.txt.
+Agora temos que escalar privilégio e pegar a última flag *root.txt*
 
-After a long time looking through the files and searching for possible users, I thought I would use the linpeas script to automate my process (You can download it [here](https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS)), it is a very powerful script.
+Depois de um longo tempo olhando os arquivos e tentando encontrar outros usuários na maquina, eu pensei realmente em agilizar o processo e usar o script linpeas para automatizar o processo (Você pode baixar [aqui](https://github.com/carlospolop/PEASS-ng/tree/master/linPEAS)), um script muito poderoso.
 
-But I had forgotten to see what our current user can do. So i run `sudo -l`
+Mas eu esqueci de ver quais ferramentas e programas o meu usuário atual é capaz de fazer. Então eu rodei `sudo -l`
 
 ![tar](files/allowed-tar.png)
 
-We can use **tar**
+Podemos usar o **tar**
 
-A fast search on Google and i found on [GTFFobins site](https://gtfobins.github.io/gtfobins/tar/) this code:
+Uma rapida pesquisa no Google e eu achei esse código no site do [GTFFobins](https://gtfobins.github.io/gtfobins/tar/):
 
 ![privilege-tar](files/tar-for-root.png)
 
@@ -166,6 +166,6 @@ A fast search on Google and i found on [GTFFobins site](https://gtfobins.github.
 sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
 ~~~
 
-Now we are root. Just take the flag in `/root/root.txt`
+Viramos root ao executar esse comando. Agora é simplesmente pegar a flag em `/root/root.txt`
 
 ![root](files/rootxt.png)
